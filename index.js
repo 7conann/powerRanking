@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-        updateRanking(rankedQuizProgress);
+        updateRanking(rankedQuizProgress, videoData.id); // Passar o ID correto
       }
   }
 
-  function updateRanking(rankedQuizProgress) {
+  function updateRanking(rankedQuizProgress, userId) {
       const rankingContainer = document.getElementById('ranking-container');
       rankingContainer.innerHTML = ''; // Limpar o conteúdo existente
 
@@ -51,10 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           rankingContainer.appendChild(rankItem);
 
-          // Extrair o ID da URL
-          const url = item.aulaUrl;
-          const idMatch = url.match(/\/([^\/]+)$/);
-          const id = idMatch ? idMatch[1] : 'ID não encontrado';
+          // Usar o ID correto do Supabase
+          const id = userId;
 
           // Enviar o ID para a página pai
           sendIdToParent(id);
