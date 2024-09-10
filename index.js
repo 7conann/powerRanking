@@ -43,11 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
       rankedQuizProgress.forEach((item, index) => {
           const rankItem = document.createElement('div');
           rankItem.classList.add('rank-item');
+
+          // Adicionar classes para os três primeiros colocados
+          if (index === 0) {
+              rankItem.classList.add('first');
+          } else if (index === 1) {
+              rankItem.classList.add('second');
+          } else if (index === 2) {
+              rankItem.classList.add('third');
+          }
+
           rankItem.innerHTML = `
               <span>#${index + 1}</span>
               <p>${item.name || 'Anônimo'}</p>
               <p>${item.score}/5</p>
-              <p>${item.timing.toFixed(2)} seg</p>
+              <p class="seg">${item.timing.toFixed(2)} seg</p>
           `;
           rankingContainer.appendChild(rankItem);
 

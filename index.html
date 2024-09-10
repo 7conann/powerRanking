@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.28.5/dist/umd/supabase.min.js"></script>
 </head>
 <body style="display: flex; flex-direction: column;">
-    <h1> Power ranking</h1>
+    <h1>Power Ranking</h1>
     <div class="ranking">
-        
-        <div class="rank-item first" id="ranking-container">
-        
-        </div>
-
+        <div id="ranking-container"></div>
         <div class="rank-item current-user">
             <span>#?</span>
             <p>Você</p>
@@ -21,6 +18,5 @@
         </div>
     </div>
     <script src="index.js"></script>
-
 </body>
 </html>

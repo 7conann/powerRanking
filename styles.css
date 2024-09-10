@@ -1,69 +1,48 @@
-* {
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
 .ranking {
-    width: 350px;
-    padding: 20px;
-    background-color: #1C1C1C;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .rank-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #333;
-}
-
-.rank-item span {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.rank-item p {
-    margin: 0;
-    font-size: 1rem;
+    margin: 5px 0;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
 }
 
 .rank-item.first {
-    background-color: #121212;
-    color: #FFD700; /* Ouro */
-    border: 1px solid #FFD700;
+    background-color: #FFD700; /* Gold */
+    color: black;
 }
 
 .rank-item.second {
-    background-color: #121212;
-    color: #C0C0C0; /* Prata */
-    border: 1px solid #C0C0C0;
+    background-color: #C0C0C0; /* Silver */
+    color: black;
 }
 
 .rank-item.third {
-    background-color: #121212;
-    color: #CD7F32; /* Bronze */
-    border: 1px solid #CD7F32;
-}
-
-.rank-item.normal {
-    background-color: #121212;
-    color: white;
-    border: 1px solid #444;
+    background-color: #CD7F32; /* Bronze */
+    color: black;
 }
 
 .rank-item.current-user {
