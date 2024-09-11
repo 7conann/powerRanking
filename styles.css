@@ -57,7 +57,8 @@ body {
 .rank-item .seg {
     font-size: 0.8rem;
     color: #777;
-    flex: 0 0 80px; /* Largura fixa para o tempo */
+    flex: 0 0 80px; 
+    text-align: end;/* Largura fixa para o tempo */
 }
 
 .rank-item.first {
