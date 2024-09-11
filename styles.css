@@ -19,7 +19,6 @@ body {
     width: 90%;
     max-width: 600px;
     padding: 20px;
-    background-color: #1C1C1C;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
 }
@@ -74,10 +73,11 @@ body {
 }
 
 .rank-item.current-user {
-    margin-top: 5px;
+    margin-top: 15px;
     background-color: #121212;
     color: white;
-   
+    border: 1px solid #ffffff;
+
 }
 
 .seg {
