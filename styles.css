@@ -87,6 +87,10 @@ body {
     color: white;
     border: 1px solid #ffffff;
 }
+h4{
+    text-align: center;
+    width: 100px;
+}
 
 @media (max-width: 768px) {
     .ranking {
