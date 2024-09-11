@@ -7,143 +7,140 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let userIdToRankItemMap = new Map();
   let currentUser = {};
+  let firstUser = null; // Variável para armazenar o primeiro usuário
 
   async function fetchData() {
-      console.log('Iniciando a consulta ao Supabase...');
-      let { data, error } = await supabase
-        .from(TABLE_NAME)
-        .select('*');
-    
-      console.log('Resposta completa:', { data, error });
-    
-      if (error) {
-        console.error('Erro ao consultar o Supabase:', error);
-      } else if (data.length === 0) {
-        console.warn('Nenhum dado encontrado na tabela workez.');
+    console.log('Iniciando a consulta ao Supabase...');
+    let { data, error } = await supabase
+      .from(TABLE_NAME)
+      .select('*');
+
+    console.log('Resposta completa:', { data, error });
+
+    if (error) {
+      console.error('Erro ao consultar o Supabase:', error);
+    } else if (data.length === 0) {
+      console.warn('Nenhum dado encontrado na tabela workez.');
+    } else {
+      console.log('Dados recebidos do Supabase:', data);
+
+      // Filtrar os dados que possuem quizProgress
+      const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
+
+      if (validData.length > 0) {
+        // Extrair e combinar todos os dados de quizProgress
+        const allQuizProgress = validData.flatMap(item => item.quizProgress.data);
+
+        // Ordenar os dados de quizProgress
+        const rankedQuizProgress = allQuizProgress.sort((a, b) => {
+          if (b.score === a.score) {
+            return a.timing - b.timing; // Menor tempo primeiro em caso de empate na pontuação
+          }
+          return b.score - a.score; // Maior pontuação primeiro
+        }).slice(0, 10); // Limitar aos 10 melhores resultados
+
+        console.log('Rankeamento de quizProgress:', rankedQuizProgress);
+        updateRanking(rankedQuizProgress, validData); // Passar os dados rankeados e os dados válidos
       } else {
-        console.log('Dados recebidos do Supabase:', data);
-        
-        // Filtrar os dados que possuem quizProgress
-        const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
-
-        if (validData.length > 0) {
-            // Extrair e combinar todos os dados de quizProgress
-            const allQuizProgress = validData.flatMap(item => item.quizProgress.data);
-
-            // Ordenar os dados de quizProgress
-            const rankedQuizProgress = allQuizProgress.sort((a, b) => {
-              if (b.score === a.score) {
-                return a.timing - b.timing; // Menor tempo primeiro em caso de empate na pontuação
-              }
-              return b.score - a.score; // Maior pontuação primeiro
-            }).slice(0, 10); // Limitar aos 10 melhores resultados
-
-            console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-            updateRanking(rankedQuizProgress, validData); // Passar os dados rankeados e os dados válidos
-        } else {
-            console.warn('Nenhum dado de quizProgress encontrado.');
-        }
+        console.warn('Nenhum dado de quizProgress encontrado.');
       }
+    }
   }
 
   function updateRanking(rankedQuizProgress, validData) {
-      const rankingContainer = document.getElementById('ranking-container');
-      rankingContainer.innerHTML = ''; // Limpar o conteúdo existente
+    const rankingContainer = document.getElementById('ranking-container');
+    rankingContainer.innerHTML = ''; // Limpar o conteúdo existente
 
-      rankedQuizProgress.forEach((item, index) => {
-          const rankItem = document.createElement('div');
-          rankItem.classList.add('rank-item');
+    rankedQuizProgress.forEach((item, index) => {
+      const rankItem = document.createElement('div');
+      rankItem.classList.add('rank-item');
 
-          // Adicionar classes para os três primeiros colocados
-          if (index === 0) {
-              rankItem.classList.add('first');
-          } else if (index === 1) {
-              rankItem.classList.add('second');
-          } else if (index === 2) {
-              rankItem.classList.add('third');
-          }
+      // Adicionar classes para os três primeiros colocados
+      if (index === 0) {
+        rankItem.classList.add('first');
+      } else if (index === 1) {
+        rankItem.classList.add('second');
+      } else if (index === 2) {
+        rankItem.classList.add('third');
+      }
 
-          // Encontrar o usuário correspondente ao quizProgress
-          const user = validData.find(user => user.quizProgress.data.includes(item));
+      // Encontrar o usuário correspondente ao quizProgress
+      const user = validData.find(user => user.quizProgress.data.includes(item));
 
-          rankItem.innerHTML = `
-              <span>#${index + 1}</span>
-              <p>${user.name || 'Anônimo'}</p>
-              <h4>${item.score}/5</h4>
-              <p class="seg">${item.timing.toFixed(2)} seg</p>
-          `;
-          rankingContainer.appendChild(rankItem);
+      rankItem.innerHTML = `
+        <span>#${index + 1}</span>
+        <p>${user.name || 'Anônimo'}</p>
+        <h4>${item.score}/5</h4>
+        <p class="seg">${item.timing.toFixed(2)} seg</p>
+      `;
+      rankingContainer.appendChild(rankItem);
 
-          // Mapear o ID do usuário para o elemento do ranking
-          userIdToRankItemMap.set(user.id, rankItem);
+      // Mapear o ID do usuário para o elemento do ranking
+      userIdToRankItemMap.set(user.id, rankItem);
 
-          // Enviar o ID do usuário para a página pai
-          sendIdToParent(user.id);
+      // Enviar o ID do usuário para a página pai
+      sendIdToParent(user.id);
 
-          // Exibir a posição no ranking no console
-          console.log(`ID: ${user.id}, Posição no ranking: #${index + 1}`);
-      });
+      // Exibir a posição no ranking no console
+      console.log(`ID: ${user.id}, Posição no ranking: #${index + 1}`);
+    });
   }
 
   // Função para enviar o ID para a página pai
   function sendIdToParent(id) {
-      window.parent.postMessage({ type: 'SEND_ID', id: id }, '*');
+    window.parent.postMessage({ type: 'SEND_ID', id: id }, '*');
   }
 
   // Função para receber mensagens da página pai
   window.addEventListener('message', (event) => {
-      if (event.data.type === 'USER_INFO') {
-          const name = event.data.name;
-          const email = event.data.email;
-          const id = event.data.id;
-          console.log(`Recebido nome do usuário: ${name}`);
-          console.log(`Recebido email do usuário: ${email}`);
-          console.log(`Recebido ID do usuário: ${id}`);
+    if (event.data.type === 'USER_INFO') {
+      const name = event.data.name;
+      const email = event.data.email;
+      const id = event.data.id;
+      console.log(`Recebido nome do usuário: ${name}`);
+      console.log(`Recebido email do usuário: ${email}`);
+      console.log(`Recebido ID do usuário: ${id}`);
 
-          // Atualizar o ranking com o nome e o email do usuário
-          updateRankingWithUserInfo(id, name, email);
+      // Atualizar o ranking com o nome e o email do usuário
+      updateRankingWithUserInfo(id, name, email);
 
-          // Atualizar a seção "Você" com o nome do usuário logado
-          updateCurrentUserSection(name, email);
-      }
+      // Atualizar a seção "Você" com o nome do usuário logado
+      updateCurrentUserSection(name, email);
+    }
   });
 
   // Função para atualizar o ranking com o nome e o email do usuário
   function updateRankingWithUserInfo(id, name, email) {
-      // Atualize o ranking com o nome e o email do usuário
-      const rankItem = userIdToRankItemMap.get(id);
-      if (rankItem) {
-          const rankName = rankItem.querySelector('p');
-          rankName.textContent = name || 'Anônimo';
-      }
+    // Atualize o ranking com o nome e o email do usuário
+    const rankItem = userIdToRankItemMap.get(id);
+    if (rankItem) {
+      const rankName = rankItem.querySelector('p');
+      rankName.textContent = name || 'Anônimo';
+    }
   }
 
-// Variável para armazenar o primeiro usuário
-let firstUser = null;
+  // Função para atualizar a seção "Você" com o nome e o email do usuário logado
+  function updateCurrentUserSection(name, email) {
+    // Verifica se o primeiro usuário já foi definido
+    if (firstUser !== null) {
+      return; // Sai da função se o primeiro usuário já foi definido
+    }
 
-// Função para atualizar a seção "Você" com o nome e o email do usuário logado
-function updateCurrentUserSection(name, email) {
-  // Verifica se o primeiro usuário já foi definido
-  if (firstUser !== null) {
-    return; // Sai da função se o primeiro usuário já foi definido
+    console.log('Atualizando a seção "Você"...');
+    console.log('Nome:', name);
+    console.log('Email:', email);
+
+    const currentUserSection = document.querySelector('.rank-item.current-user');
+    firstUser = { name, email };
+    console.log('Primeiro usuário:', firstUser);
+
+    if (currentUserSection) {
+      currentUserSection.querySelector('p').textContent = name || 'Anônimo';
+      currentUserSection.querySelector('.email').textContent = email || '';
+    } else {
+      console.error('Elemento .rank-item.current-user não encontrado.');
+    }
   }
 
-  console.log('Atualizando a seção "Você"...');
-  console.log('Nome:', name);
-  console.log('Email:', email);
-
-  const currentUserSection = document.querySelector('.rank-item.current-user');
-  firstUser = { name, email };
-  console.log(firstUser, 'primeiro usuáriossssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
-  if (currentUserSection) {
-    currentUserSection.querySelector('p').textContent = name || 'Anônimo';
-    currentUserSection.querySelector('.email').textContent = email || '';
-    // Armazena o primeiro usuário na variável
-   
-  } else {
-    console.error('Elemento .rank-item.current-user não encontrado.');
-  }
-}
-
-fetchData();
+  fetchData();
 });
