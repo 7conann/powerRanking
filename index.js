@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
       let { data, error } = await supabase
         .from(TABLE_NAME)
         .select('*')
-        .limit(1); // Pegando apenas o primeiro vídeo
     
       console.log('Resposta completa:', { data, error });
     
