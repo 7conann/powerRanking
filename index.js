@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Ordenar os dados de quizProgress
             const rankedQuizProgress = allQuizProgress.sort((a, b) => {
-              if (a.timing === b.timing) {
-                return b.score - a.score; // Maior pontuação primeiro em caso de empate no tempo
+              if (b.score === a.score) {
+                return a.timing - b.timing; // Menor tempo primeiro em caso de empate na pontuação
               }
-              return a.timing - b.timing; // Menor tempo primeiro
+              return b.score - a.score; // Maior pontuação primeiro
             }).slice(0, 10); // Limitar aos 10 melhores resultados
 
             console.log('Rankeamento de quizProgress:', rankedQuizProgress);
