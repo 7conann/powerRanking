@@ -100,9 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(`Recebido nome do usuário logado: ${name}`);
           console.log(`Recebido email do usuário logado: ${email}`);
           
-          // Armazenar o primeiro usuário em uma constante
-          const firstUser = { id, name, email };
-          console.log('Primeiro usuário recebido:', firstUser);
+          // Atualizar a seção "Você" com os dados do usuário atual
+          updateCurrentUserSection(name, email);
       }
   });
 
@@ -117,9 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Atualizar o ranking com o nome e o email do usuário
           updateRankingWithUserInfo(id, name, email);
-
-          // Atualizar a seção "Você" com o nome do usuário logado
-          updateCurrentUserSection(name, email);
       }
   });
 
