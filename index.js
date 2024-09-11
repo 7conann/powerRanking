@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   let userIdToRankItemMap = new Map();
+  let currentUser = {};
 
   async function fetchData() {
       console.log('Iniciando a consulta ao Supabase...');
@@ -101,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Atualizar o ranking com o nome e o email do usuário
           updateRankingWithUserInfo(id, name, email);
+
+          // Atualizar a seção "Você" com o nome e o email do usuário logado
+          updateCurrentUserSection(name, email);
       }
   });
 
@@ -111,6 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (rankItem) {
           const rankName = rankItem.querySelector('p');
           rankName.textContent = name || 'Anônimo';
+      }
+  }
+
+  // Função para atualizar a seção "Você" com o nome e o email do usuário logado
+  function updateCurrentUserSection(name, email) {
+      const currentUserSection = document.querySelector('.rank-item.current-user');
+      if (currentUserSection) {
+          currentUserSection.querySelector('p').textContent = name || 'Anônimo';
+          currentUserSection.querySelector('.seg').textContent = email || '';
       }
   }
 
