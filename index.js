@@ -121,11 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Função para atualizar a seção "Você" com o nome e o email do usuário logado
   function updateCurrentUserSection(name, email) {
     console.log('Atualizando a seção "Você"...');
-    console.log('Nomejujaudawudaiubduawbduawb:', name);
+    console.log('Nome:', name);
+    console.log('Email:', email);
       const currentUserSection = document.querySelector('.rank-item.current-user');
       if (currentUserSection) {
           currentUserSection.querySelector('p').textContent = name || 'Anônimo';
           currentUserSection.querySelector('.email').textContent = email || '';
+      } else {
+          console.error('Elemento .rank-item.current-user não encontrado.');
       }
   }
 
