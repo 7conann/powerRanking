@@ -42,7 +42,6 @@ body {
     font-size: 1.2rem;
     font-weight: bold;
     flex: 0 0 50px; /* Largura fixa para o número da posição */
-    
 }
 
 .rank-item p {
@@ -50,17 +49,12 @@ body {
     font-size: 0.9rem; /* Fonte menor */
     font-weight: bold; /* Negrito */
     flex: 1; /* Flexível para ocupar o espaço restante */
-    
 }
-h4{
-    text-align: center;
 
-}
 .rank-item .seg {
     font-size: 0.8rem;
     color: #777;
     flex: 0 0 80px; /* Largura fixa para o tempo */
-    
 }
 
 .rank-item.first {
@@ -96,13 +90,12 @@ h4{
 
 @media (max-width: 768px) {
     .ranking {
-        width: 100%;
-        padding: 10px;
+        width: 80%;
+        padding: 15px;
     }
 
     .rank-item {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 8px;
     }
 
     .rank-item span {
@@ -110,18 +103,18 @@ h4{
     }
 
     .rank-item p {
-        font-size: 0.8rem; /* Fonte menor */
+        font-size: 0.8rem;
     }
 
     .rank-item .seg {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 }
 
 @media (max-width: 480px) {
     .ranking {
-        width: 100%;
-        padding: 5px;
+        width: 70%;
+        padding: 10px;
     }
 
     .rank-item {
@@ -133,10 +126,10 @@ h4{
     }
 
     .rank-item p {
-        font-size: 0.7rem; /* Fonte menor */
+        font-size: 0.7rem;
     }
 
     .rank-item .seg {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
 }
