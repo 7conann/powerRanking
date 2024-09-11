@@ -41,11 +41,22 @@ body {
 .rank-item span {
     font-size: 1.2rem;
     font-weight: bold;
+    flex: 0 0 50px; /* Largura fixa para o número da posição */
+    text-align: center;
 }
 
 .rank-item p {
     margin: 0;
     font-size: 1rem;
+    flex: 1; /* Flexível para ocupar o espaço restante */
+    text-align: center;
+}
+
+.rank-item .seg {
+    font-size: 0.8rem;
+    color: #777;
+    flex: 0 0 80px; /* Largura fixa para o tempo */
+    text-align: center;
 }
 
 .rank-item.first {
@@ -77,12 +88,6 @@ body {
     background-color: #121212;
     color: white;
     border: 1px solid #ffffff;
-
-}
-
-.seg {
-    font-size: 0.8rem;
-    color: #777;
 }
 
 @media (max-width: 768px) {
@@ -103,6 +108,10 @@ body {
     .rank-item p {
         font-size: 0.9rem;
     }
+
+    .rank-item .seg {
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -121,5 +130,9 @@ body {
 
     .rank-item p {
         font-size: 0.8rem;
+    }
+
+    .rank-item .seg {
+        font-size: 0.7rem;
     }
 }
