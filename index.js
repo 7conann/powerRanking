@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  let userIdToRankItemMap = new Map();
+
   async function fetchData() {
       console.log('Iniciando a consulta ao Supabase...');
       let { data, error } = await supabase
@@ -71,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           rankingContainer.appendChild(rankItem);
 
+          // Mapear o ID do usuário para o elemento do ranking
+          userIdToRankItemMap.set(user.id, rankItem);
+
           // Enviar o ID do usuário para a página pai
           sendIdToParent(user.id);
 
@@ -89,26 +94,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (event.data.type === 'USER_INFO') {
           const name = event.data.name;
           const email = event.data.email;
+          const id = event.data.id;
           console.log(`Recebido nome do usuário: ${name}`);
           console.log(`Recebido email do usuário: ${email}`);
+          console.log(`Recebido ID do usuário: ${id}`);
 
           // Atualizar o ranking com o nome e o email do usuário
-          updateRankingWithUserInfo(name, email);
+          updateRankingWithUserInfo(id, name, email);
       }
   });
 
   // Função para atualizar o ranking com o nome e o email do usuário
-  function updateRankingWithUserInfo(name, email) {
+  function updateRankingWithUserInfo(id, name, email) {
       // Atualize o ranking com o nome e o email do usuário
-      // Este é um exemplo simples, você pode adaptar conforme necessário
-      const rankingContainer = document.getElementById('ranking-container');
-      const rankItems = rankingContainer.querySelectorAll('.rank-item');
-      rankItems.forEach(rankItem => {
+      const rankItem = userIdToRankItemMap.get(id);
+      if (rankItem) {
           const rankName = rankItem.querySelector('p');
-          if (rankName.textContent === 'Anônimo') {
-              rankName.textContent = name || 'Anônimo';
-          }
-      });
+          rankName.textContent = name || 'Anônimo';
+      }
   }
 
   fetchData();
