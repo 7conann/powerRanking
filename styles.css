@@ -129,14 +129,14 @@ h4{
     }
 
     .rank-item span {
-        font-size: 0.9rem;
-    }
-
-    .rank-item p {
         font-size: 0.7rem;
     }
 
+    .rank-item p {
+        font-size: 0.4rem;
+    }
+
     .rank-item .seg {
-        font-size: 0.6rem;
+        font-size: 0.4rem;
     }
 }

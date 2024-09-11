@@ -90,8 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.parent.postMessage({ type: 'SEND_ID', id: id }, '*');
   }
 
-// Função para receber mensagens da página pai
-window.addEventListener('message', (event) => {
+  window.addEventListener('message', (event) => {
+      if (event.data.type === 'CURRENT_USER') {
+          const id = event.data.id;
+          const name = event.data.name;
+          const email = event.data.email;
+          console.log(`Recebido ID do usuário logadojujujujuju: ${id}`);
+        console.log(`Recebido nome do usuário logadiw3ji3jei3o: ${name}`);
+        console.log(`Recebido email do usuário logado04234j302: ${email}`);
+        
+      }
+  })
+    window.addEventListener('message', (event) => {
   if (event.data.type === 'USER_INFO') {
       const name = event.data.name;
       const email = event.data.email;
