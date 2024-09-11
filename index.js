@@ -89,26 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function sendIdToParent(id) {
       window.parent.postMessage({ type: 'SEND_ID', id: id }, '*');
   }
-  function updateCurrentUserSection(name, email) {
-    console.log('Atualizando a seção "Você"...');
-    console.log('Nome do usuário:', name);
-    console.log('Email do usuário:', email);
-}
 
   window.addEventListener('message', (event) => {
     if (event.data.type === 'USER_INFO') {
-        const userName = event.data.userName;
-        const userEmail = event.data.userEmail;
-        const userId = event.data.userId;
-        console.log(`Recebido nome do usuário: ${userName}`);
-        console.log(`Recebido email do usuário: ${userEmail}`);
-        console.log(`Recebido ID do usuário: ${userId}`);
+        const name = event.data.name;
+        const email = event.data.email;
+        const id = event.data.id;
+        console.log(`Recebido nome do usuário: ${name}`);
+        console.log(`Recebido email do usuário: ${email}`);
+        console.log(`Recebido ID do usuário: ${id}`);
 
         // Atualizar o ranking com o nome e o email do usuário
-        updateRankingWithUserInfo(userId, userName, userEmail);
+        updateRankingWithUserInfo(id, name, email);
 
         // Atualizar a seção "Você" com o nome do usuário logado
-        updateCurrentUserSection(userName, userEmail);
+        updateCurrentUserSection(name, email);
     }
 });
 
@@ -122,5 +117,13 @@ function updateRankingWithUserInfo(id, name, email) {
     }
 }
 
-  fetchData();
+// Função para atualizar a seção "Você" com o nome e o email do usuário logado
+function updateCurrentUserSection(name, email) {
+    const currentUserSection = document.querySelector('.rank-item.current-user');
+    if (currentUserSection) {
+        currentUserSection.querySelector('p').textContent = name || 'Anônimo';
+        currentUserSection.querySelector('.email').textContent = email || '';
+    }
+}
+fetchData();
 });
