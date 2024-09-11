@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rankItem.innerHTML = `
               <span>#${index + 1}</span>
               <p>${user.name || 'Anônimo'}</p>
-              <p>${item.score}/5</p>
+              <h4>${item.score}/5</h4>
               <p class="seg">${item.timing.toFixed(2)} seg</p>
           `;
           rankingContainer.appendChild(rankItem);
