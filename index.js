@@ -22,16 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const videoData = data[0];
         const quizProgress = videoData.quizProgress;
 
-        // Ordenar os dados de quizProgress
-        const rankedQuizProgress = quizProgress.data.sort((a, b) => {
-          if (a.timing === b.timing) {
-            return b.score - a.score; // Maior pontuação primeiro em caso de empate no tempo
-          }
-          return a.timing - b.timing; // Menor tempo primeiro
-        });
+        // Verificar se quizProgress existe e tem dados
+        if (quizProgress && quizProgress.data && quizProgress.data.length > 0) {
+            // Ordenar os dados de quizProgress
+            const rankedQuizProgress = quizProgress.data.sort((a, b) => {
+              if (a.timing === b.timing) {
+                return b.score - a.score; // Maior pontuação primeiro em caso de empate no tempo
+              }
+              return a.timing - b.timing; // Menor tempo primeiro
+            });
 
-        console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-        updateRanking(rankedQuizProgress, videoData.id); // Passar o ID correto
+            console.log('Rankeamento de quizProgress:', rankedQuizProgress);
+            updateRanking(rankedQuizProgress, videoData.id); // Passar o ID correto
+        } else {
+            console.warn('Nenhum dado de quizProgress encontrado.');
+        }
       }
   }
 
