@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-            updateRanking(rankedQuizProgress); // Passar os dados rankeados
+            updateRanking(rankedQuizProgress, validData); // Passar os dados rankeados e os dados válidos
         } else {
             console.warn('Nenhum dado de quizProgress encontrado.');
         }
       }
   }
 
-  function updateRanking(rankedQuizProgress) {
+  function updateRanking(rankedQuizProgress, validData) {
       const rankingContainer = document.getElementById('ranking-container');
       rankingContainer.innerHTML = ''; // Limpar o conteúdo existente
 
@@ -60,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
               rankItem.classList.add('third');
           }
 
+          // Encontrar o usuário correspondente ao quizProgress
+          const user = validData.find(user => user.quizProgress.data.includes(item));
+
           rankItem.innerHTML = `
               <span>#${index + 1}</span>
               <p>${item.name || 'Anônimo'}</p>
@@ -68,8 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           rankingContainer.appendChild(rankItem);
 
+          // Enviar o ID do usuário para a página pai
+          sendIdToParent(user.id);
+
           // Exibir a posição no ranking no console
-          console.log(`Posição no ranking: #${index + 1}`);
+          console.log(`ID: ${user.id}, Posição no ranking: #${index + 1}`);
       });
   }
 
