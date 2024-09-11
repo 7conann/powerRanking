@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('Iniciando a consulta ao Supabase...');
       let { data, error } = await supabase
         .from(TABLE_NAME)
-        .select('*')
+        .select('*');
     
       console.log('Resposta completa:', { data, error });
     
@@ -19,13 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('Nenhum dado encontrado na tabela workez.');
       } else {
         console.log('Dados recebidos do Supabase:', data);
-        const videoData = data[0];
-        const quizProgress = videoData.quizProgress;
+        
+        // Filtrar os dados que possuem quizProgress
+        const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
 
-        // Verificar se quizProgress existe e tem dados
-        if (quizProgress && quizProgress.data && quizProgress.data.length > 0) {
+        if (validData.length > 0) {
+            // Extrair e combinar todos os dados de quizProgress
+            const allQuizProgress = validData.flatMap(item => item.quizProgress.data);
+
             // Ordenar os dados de quizProgress
-            const rankedQuizProgress = quizProgress.data.sort((a, b) => {
+            const rankedQuizProgress = allQuizProgress.sort((a, b) => {
               if (a.timing === b.timing) {
                 return b.score - a.score; // Maior pontuação primeiro em caso de empate no tempo
               }
@@ -33,14 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-            updateRanking(rankedQuizProgress, videoData.id); // Passar o ID correto
+            updateRanking(rankedQuizProgress); // Passar os dados rankeados
         } else {
             console.warn('Nenhum dado de quizProgress encontrado.');
         }
       }
   }
 
-  function updateRanking(rankedQuizProgress, userId) {
+  function updateRanking(rankedQuizProgress) {
       const rankingContainer = document.getElementById('ranking-container');
       rankingContainer.innerHTML = ''; // Limpar o conteúdo existente
 
@@ -65,14 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           rankingContainer.appendChild(rankItem);
 
-          // Usar o ID correto do Supabase
-          const id = userId;
-
-          // Enviar o ID para a página pai
-          sendIdToParent(id);
-
-          // Exibir o ID e a posição no ranking no console
-          console.log(`ID: ${id}, Posição no ranking: #${index + 1}`);
+          // Exibir a posição no ranking no console
+          console.log(`Posição no ranking: #${index + 1}`);
       });
   }
 
