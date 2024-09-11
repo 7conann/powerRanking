@@ -119,12 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Função para atualizar a seção "Você" com o nome do usuário logado
+  // function updateCurrentUserSection(name) {
+  //     const currentUserSection = document.querySelector('.rank-item.current-user');
+  //     if (currentUserSection) {
+  //         currentUserSection.querySelector('p').textContent = name || 'Anônimo';
+  //     }
+  // }
   function updateCurrentUserSection(name) {
-      const currentUserSection = document.querySelector('.rank-item.current-user');
-      if (currentUserSection) {
-          currentUserSection.querySelector('p').textContent = name || 'Anônimo';
-      }
-  }
-
+    console.log('Atualizando a seção "Você"...');
+    console.log('Nome do usuário: jujubs', name);
+ }
   fetchData();
 });
