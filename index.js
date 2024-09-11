@@ -90,37 +90,38 @@ document.addEventListener('DOMContentLoaded', () => {
       window.parent.postMessage({ type: 'SEND_ID', id: id }, '*');
   }
 
+  // Função para receber mensagens da página pai
   window.addEventListener('message', (event) => {
       if (event.data.type === 'CURRENT_USER') {
           const id = event.data.id;
           const name = event.data.name;
           const email = event.data.email;
-          console.log(`Recebido ID do usuário logadojujujujuju: ${id}`);
-        console.log(`Recebido nome do usuário logadiw3ji3jei3o: ${name}`);
-        console.log(`Recebido email do usuário logado04234j302: ${email}`);
-        
+          console.log(`Recebido ID do usuário logado: ${id}`);
+          console.log(`Recebido nome do usuário logado: ${name}`);
+          console.log(`Recebido email do usuário logado: ${email}`);
+          
+          // Armazenar o primeiro usuário em uma constante
+          const firstUser = { id, name, email };
+          console.log('Primeiro usuário recebido:', firstUser);
       }
-  })
-    window.addEventListener('message', (event) => {
-  if (event.data.type === 'USER_INFO') {
-      const name = event.data.name;
-      const email = event.data.email;
-      const id = event.data.id;
-      console.log(`Recebido nome do usuário: ${name}`);
-      console.log(`Recebido email do usuário: ${email}`);
-      console.log(`Recebido ID do usuário: ${id}`);
+  });
 
-      // Armazenar o primeiro usuário em uma constante
-      const firstUser = { id, name, email };
-      console.log('Primeiro usuário recebido:', firstUser);
+  window.addEventListener('message', (event) => {
+      if (event.data.type === 'USER_INFO') {
+          const name = event.data.name;
+          const email = event.data.email;
+          const id = event.data.id;
+          console.log(`Recebido nome do usuário: ${name}`);
+          console.log(`Recebido email do usuário: ${email}`);
+          console.log(`Recebido ID do usuário: ${id}`);
 
-      // Atualizar o ranking com o nome e o email do usuário
-      updateRankingWithUserInfo(id, name, email);
+          // Atualizar o ranking com o nome e o email do usuário
+          updateRankingWithUserInfo(id, name, email);
 
-      // Atualizar a seção "Você" com o nome do usuário logado
-      updateCurrentUserSection(name, email);
-  }
-});
+          // Atualizar a seção "Você" com o nome do usuário logado
+          updateCurrentUserSection(name, email);
+      }
+  });
 
   // Função para atualizar o ranking com o nome e o email do usuário
   function updateRankingWithUserInfo(id, name, email) {
