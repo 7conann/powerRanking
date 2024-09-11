@@ -133,12 +133,13 @@ function updateCurrentUserSection(name, email) {
   console.log('Email:', email);
 
   const currentUserSection = document.querySelector('.rank-item.current-user');
+  firstUser = { name, email };
+  console.log(firstUser, 'primeiro usuáriossssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
   if (currentUserSection) {
     currentUserSection.querySelector('p').textContent = name || 'Anônimo';
     currentUserSection.querySelector('.email').textContent = email || '';
     // Armazena o primeiro usuário na variável
-    firstUser = { name, email };
-    console.log(firstUser, 'primeiro usuário');
+   
   } else {
     console.error('Elemento .rank-item.current-user não encontrado.');
   }
