@@ -74,9 +74,10 @@ body {
 }
 
 .rank-item.current-user {
+    margin-top: 5px;
     background-color: #121212;
     color: white;
-    border: 2px solid #fff;
+   
 }
 
 .seg {
