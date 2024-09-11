@@ -118,32 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
-// Variável para armazenar o primeiro usuário
-let firstUser = null;
+  // Função para atualizar a seção "Você" com o nome e o email do usuário logado
+  function updateCurrentUserSection(name, email) {
+      console.log('Atualizando a seção "Você"...');
+      console.log('Nome:', name);
+      console.log('Email:', email);
 
-// Função para atualizar a seção "Você" com o nome e o email do usuário logado
-function updateCurrentUserSection(name, email) {
-  // Verifica se o primeiro usuário já foi definido
-  if (firstUser !== null) {
-    return; // Sai da função se o primeiro usuário já foi definido
+      const currentUserSection = document.querySelector('.rank-item.current-user');
+      if (currentUserSection) {
+          currentUserSection.querySelector('p').textContent = name || 'Anônimo';
+          currentUserSection.querySelector('.email').textContent = email || '';
+      } else {
+          console.error('Elemento .rank-item.current-user não encontrado.');
+      }
   }
 
-  console.log('Atualizando a seção "Você"...');
-  console.log('Nome:xxxxxxxxxxxx', name);
-  console.log('Email:', email);
-
-  const currentUserSection = document.querySelector('.rank-item.current-user');
-  firstUser = { name, email };
-  console.log(firstUser, 'primeiro usuáriossssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
-  if (currentUserSection) {
-    currentUserSection.querySelector('p').textContent = name || 'Anônimo';
-    currentUserSection.querySelector('.email').textContent = email || '';
-    // Armazena o primeiro usuário na variável
-   
-  } else {
-    console.error('Elemento .rank-item.current-user não encontrado.');
-  }
-}
-
-fetchData();
+  fetchData();
 });
