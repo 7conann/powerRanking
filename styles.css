@@ -63,8 +63,8 @@ body {
 
 .rank-item.third {
     background-color: #121212;
-    color: #CD7F32; /* Bronze */
-    border: 1px solid #CD7F32;
+    color: #FF4500; /* Vermelho */
+    border: 1px solid #FF4500;
 }
 
 .rank-item.normal {
