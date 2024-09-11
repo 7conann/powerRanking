@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return b.score - a.score; // Maior pontuação primeiro em caso de empate no tempo
               }
               return a.timing - b.timing; // Menor tempo primeiro
-            });
+            }).slice(0, 10); // Limitar aos 10 melhores resultados
 
             console.log('Rankeamento de quizProgress:', rankedQuizProgress);
             updateRanking(rankedQuizProgress, validData); // Passar os dados rankeados e os dados válidos
