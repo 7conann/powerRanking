@@ -129,7 +129,7 @@ function updateCurrentUserSection(name, email) {
   }
 
   console.log('Atualizando a seção "Você"...');
-  console.log('Nome:', name);
+  console.log('Nome:xxxxxxxxxxxx', name);
   console.log('Email:', email);
 
   const currentUserSection = document.querySelector('.rank-item.current-user');
