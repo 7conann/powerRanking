@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           rankItem.innerHTML = `
               <span>#${index + 1}</span>
-              <p>${item.name || 'Anônimo'}</p>
+              <p>${user.name || 'Anônimo'}</p>
               <p>${item.score}/5</p>
               <p class="seg">${item.timing.toFixed(2)} seg</p>
           `;
@@ -102,10 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // Atualize o ranking com o nome e o email do usuário
       // Este é um exemplo simples, você pode adaptar conforme necessário
       const rankingContainer = document.getElementById('ranking-container');
-      const rankItem = rankingContainer.querySelector('.rank-item');
-      if (rankItem) {
-          rankItem.querySelector('p').textContent = name || 'Anônimo';
-      }
+      const rankItems = rankingContainer.querySelectorAll('.rank-item');
+      rankItems.forEach(rankItem => {
+          const rankName = rankItem.querySelector('p');
+          if (rankName.textContent === 'Anônimo') {
+              rankName.textContent = name || 'Anônimo';
+          }
+      });
   }
 
   fetchData();
