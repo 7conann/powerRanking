@@ -21,7 +21,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
-  
 }
 
 #ranking-container {
@@ -48,7 +47,8 @@ body {
 
 .rank-item p {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Fonte menor */
+    font-weight: bold; /* Negrito */
     flex: 1; /* Flexível para ocupar o espaço restante */
     text-align: center;
 }
@@ -107,7 +107,7 @@ body {
     }
 
     .rank-item p {
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* Fonte menor */
     }
 
     .rank-item .seg {
@@ -130,7 +130,7 @@ body {
     }
 
     .rank-item p {
-        font-size: 0.8rem;
+        font-size: 0.7rem; /* Fonte menor */
     }
 
     .rank-item .seg {
