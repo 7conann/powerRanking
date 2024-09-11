@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
           // Atualizar o ranking com o nome e o email do usuário
           updateRankingWithUserInfo(id, name, email);
 
-          // Atualizar a seção "Você" com o nome e o email do usuário logado
-          updateCurrentUserSection(name, email);
+          // Atualizar a seção "Você" com o nome do usuário logado
+          updateCurrentUserSection(name);
       }
   });
 
@@ -118,12 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
-  // Função para atualizar a seção "Você" com o nome e o email do usuário logado
-  function updateCurrentUserSection(name, email) {
+  // Função para atualizar a seção "Você" com o nome do usuário logado
+  function updateCurrentUserSection(name) {
       const currentUserSection = document.querySelector('.rank-item.current-user');
       if (currentUserSection) {
           currentUserSection.querySelector('p').textContent = name || 'Anônimo';
-          currentUserSection.querySelector('.seg').textContent = email || '';
       }
   }
 
