@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const id = event.data.id;
           const name = event.data.name;
           const email = event.data.email;
-          console.log(`Recebido ID do usuário logado: ${id}`);
-          console.log(`Recebido nome do usuário logado: ${name}`);
+          console.log(`Recebido ID do usuário logaddawddddddddddddddddwao: ${id}`);
+          console.log(`Recebido nome do usuário dawwwwwwwwwwwwwwwwww: ${name}`);
           console.log(`Recebido email do usuário logado: ${email}`);
           
           // Atualizar a seção "Você" com os dados do usuário atual
