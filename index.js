@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // Função para abreviar o nome
+    function abreviarNome(nome, maxLength) {
+        if (nome.length <= maxLength) return nome;
+        const [primeiroNome, ...sobrenomes] = nome.split(' ');
+        if (primeiroNome.length >= maxLength) return primeiroNome.slice(0, maxLength);
+        const abreviado = sobrenomes.reduce((acc, sobrenome) => {
+            if (acc.length + sobrenome.length + 1 <= maxLength) {
+                return `${acc} ${sobrenome.charAt(0)}.`;
+            }
+            return acc;
+        }, primeiroNome);
+        return abreviado;
+    }
+
     // Função para buscar dados do Supabase e atualizar o ranking
     async function fetchData() {
         console.log('Iniciando a consulta ao Supabase...');
@@ -30,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: item.quizProgress.name // Adicionar o nome do usuário ao objeto quiz
+                    name: abreviarNome(item.quizProgress.name, 15) // Adicionar o nome do usuário ao objeto quiz e abreviar
                 })));
 
                 // Ordenar os dados de quizProgress
