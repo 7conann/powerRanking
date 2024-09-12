@@ -9,12 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para abreviar o nome
     function abreviarNome(nome, maxLength) {
-        if (!nome) return ''; // Verifica se o nome está definido
         if (nome.length <= maxLength) return nome;
         const [primeiroNome, ...sobrenomes] = nome.split(' ');
         if (primeiroNome.length >= maxLength) return primeiroNome.slice(0, maxLength);
         const abreviado = sobrenomes.reduce((acc, sobrenome) => {
-            if (acc.length + sobrenome.length + 2 <= maxLength) { // +2 para incluir o espaço e o ponto
+            if (acc.length + sobrenome.length + 1 <= maxLength) {
                 return `${acc} ${sobrenome.charAt(0)}.`;
             }
             return acc;
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: abreviarNome(item.name, 15) // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    name: abreviarNome(item.quizProgress.name, 15) // Adicionar o nome do usuário ao objeto quiz e abreviar
                 })));
 
                 // Ordenar os dados de quizProgress
