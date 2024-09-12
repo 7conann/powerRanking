@@ -106,8 +106,7 @@ h4 {
     .rank-item span {
         font-size: 1rem;
     }
-
-
+ 
 }
 
 @media (max-width: 480px) {
@@ -123,5 +122,10 @@ h4 {
     .rank-item span {
         font-size: 0.7rem;
     }
-
+    .rank-item p {
+        font-size: 0.6rem;
+    }
+    .rank-item .seg{
+        font-size: 0.6rem;
+    }
 }
