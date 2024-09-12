@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             rankItem.innerHTML = `
                 <span class="rank-position">${index + 1}</span>
-                <p class="seg">${quiz.name}</p>
+                <p >${quiz.name}</p>
                 <p class="seg">${quiz.score}</p>
                 <p class="seg">${quiz.timing}</p>
             `;
