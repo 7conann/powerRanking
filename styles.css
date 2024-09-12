@@ -79,7 +79,7 @@ body {
     border: 1px solid #FF4500;
 }
 
-.rank-item.normal {
+.rank-item.normal, .rank-item.current-user {
     color: white;
     border: 1px solid #444;
 }
@@ -87,8 +87,6 @@ body {
 .rank-item.current-user {
     margin-top: 10px;
     background-color: #121212;
-    color: white;
-    border: 1px solid #ffffff;
 }
 
 h4 {

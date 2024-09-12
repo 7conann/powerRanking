@@ -9,11 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para abreviar o nome
     function abreviarNome(nome, maxLength) {
+        if (!nome) return ''; // Verifica se o nome está definido
         if (nome.length <= maxLength) return nome;
         const [primeiroNome, ...sobrenomes] = nome.split(' ');
         if (primeiroNome.length >= maxLength) return primeiroNome.slice(0, maxLength);
         const abreviado = sobrenomes.reduce((acc, sobrenome) => {
-            if (acc.length + sobrenome.length + 1 <= maxLength) {
+            if (acc.length + sobrenome.length + 2 <= maxLength) { // +2 para incluir o espaço e o ponto
                 return `${acc} ${sobrenome.charAt(0)}.`;
             }
             return acc;
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: abreviarNome(item.quizProgress.name, 15) // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    name: abreviarNome(item.quizProgress.name, 20) // Adicionar o nome do usuário ao objeto quiz e abreviar
                 })));
 
                 // Ordenar os dados de quizProgress
@@ -111,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUser = user;
 
             // Atualizar a interface do iframe com os dados do usuário
-            document.getElementById('currentUserName').textContent = user.name;
+            document.getElementById('currentUserName').textContent = abreviarNome(user.name, 20);
             document.getElementById('currentUserEmail').textContent = user.email;
         } else {
             console.log('Mensagem recebida:', event.data);
