@@ -57,7 +57,6 @@ body {
 .rank-item .seg {
     font-size: 0.8rem;
     color: #ffffff;
-    flex: 0 0 80px; 
     text-align: end;/* Largura fixa para o tempo */
 }
 
@@ -108,13 +107,7 @@ h4 {
         font-size: 1rem;
     }
 
-    .rank-item p {
-        font-size: 0.8rem;
-    }
 
-    .rank-item .seg {
-        font-size: 0.7rem;
-    }
 }
 
 @media (max-width: 480px) {
@@ -131,11 +124,4 @@ h4 {
         font-size: 0.7rem;
     }
 
-    .rank-item p {
-        font-size: 0.4rem;
-    }
-
-    .rank-item .seg {
-        font-size: 0.4rem;
-    }
 }
