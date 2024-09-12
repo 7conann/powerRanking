@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .select('*');
     
       console.log('Resposta completa:', { data, error });
-    
+      console.log('Dados recebidos do nome', data.data.quizProgress.name);
       if (error) {
         console.error('Erro ao consultar o Supabase:', error);
       } else if (data.length === 0) {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ...quiz,
                 name: item.name // Adicionar o nome do usuário ao objeto quiz
             })));
-            console.log('Todos os dados de quizProgress:', allQuizProgress);
+
             // Ordenar os dados de quizProgress
             const rankedQuizProgress = allQuizProgress.sort((a, b) => {
               if (b.score === a.score) {
