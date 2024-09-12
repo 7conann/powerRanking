@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log('Rankeamento de quizProgress:', rankedQuizProgress);
                 updateRanking(rankedQuizProgress); // Passar os dados rankeados
-                console.log('Dados do usuário atual:', currentUser);
+
                 // Atualizar os dados do usuário atual
                 if (currentUser) {
                     const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20);
                         document.getElementById('currentUserScore').textContent = currentUserData.score;
                         document.getElementById('currentUserTiming').textContent = currentUserData.timing;
+                    } else {
+                        document.getElementById('currentUserPosition').textContent = '#?';
+                        document.getElementById('currentUserScore').textContent = '#?';
+                        document.getElementById('currentUserTiming').textContent = '#?';
                     }
                 }
             } else {
@@ -112,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.data.type === 'USER_INFO') {
             const user = event.data.user;
             console.log('Dados do usuário recebidos no iframe:', user);
-          console.log(user.id);
+            console.log(user.id);
             // Definir o usuário atual
             currentUser = user;
 
@@ -129,5 +133,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Buscar dados do Supabase ao carregar a página
-    fetchData();
+    // Removido fetchData() daqui para garantir que só seja chamado após receber USER_INFO
 });
