@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (validData.length > 0) {
             // Extrair e combinar todos os dados de quizProgress
-            const allQuizProgress = validData.flatMap(item => item.quizProgress.data);
+            const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
+                ...quiz,
+                name: item.name // Adicionar o nome do usuário ao objeto quiz
+            })));
 
             // Ordenar os dados de quizProgress
             const rankedQuizProgress = allQuizProgress.sort((a, b) => {
@@ -36,11 +39,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }).slice(0, 10); // Limitar aos 10 melhores resultados
 
             console.log('Rankeamento de quizProgress:', rankedQuizProgress);
-            updateRanking(rankedQuizProgress, validData); // Passar os dados rankeados e os dados válidos
+            updateRanking(rankedQuizProgress); // Passar os dados rankeados
         } else {
             console.warn('Nenhum dado de quizProgress encontrado.');
         }
       }
   }
+
+  // Função para atualizar o ranking na interface do usuário
+  function updateRanking(rankedQuizProgress) {
+    const rankingContainer = document.getElementById('rankingContainer');
+    rankingContainer.innerHTML = ''; // Limpar o conteúdo anterior
+
+    rankedQuizProgress.forEach((quiz, index) => {
+      const rankItem = document.createElement('div');
+      rankItem.className = 'rank-item';
+      rankItem.innerHTML = `
+        <div class="rank-position">${index + 1}</div>
+        <div class="rank-name">${quiz.name}</div>
+        <div class="rank-score">${quiz.score}</div>
+        <div class="rank-timing">${quiz.timing}</div>
+      `;
+      rankingContainer.appendChild(rankItem);
+    });
+  }
+
   fetchData();
 });
