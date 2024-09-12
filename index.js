@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para abreviar o nome
     function abreviarNome(nome, maxLength) {
+        if (!nome) return ''; // Verifica se o nome está definido
         if (nome.length <= maxLength) return nome;
         const [primeiroNome, ...sobrenomes] = nome.split(' ');
         if (primeiroNome.length >= maxLength) return primeiroNome.slice(0, maxLength);
