@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.data.type === 'USER_INFO') {
             const user = event.data.user;
             console.log('Dados do usuário recebidos no iframe:', user);
-            console.log(user.id);
+            fetchData();
             // Definir o usuário atual
             currentUser = user;
 
@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('currentUserEmail').textContent = user.email;
 
             // Buscar dados do Supabase após definir o usuário atual
-            fetchData();
         } else {
             console.log('Mensagem recebida:', event.data);
             console.log('Tipo de mensagem não reconhecido:', event.data.type);
