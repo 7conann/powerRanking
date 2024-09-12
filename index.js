@@ -93,5 +93,5 @@ window.addEventListener('message', (event) => {
       console.log('Tipo de mensagem não reconhecido:', event.data.type);
   }
 });
-
+fetchData();
 });
