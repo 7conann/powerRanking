@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Atualizar os dados do usuário atual
                 if (currentUser) {
                     const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
+                    console.log('Dados do usuário atual:', currentUserData);
                     if (currentUserData) {
                         document.getElementById('currentUserPosition').textContent = `#${rankedQuizProgress.findIndex(quiz => quiz.userId === currentUser.id) + 1}`;
                         document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20);
