@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sobrenomes.length > 0) {
             abreviado += ` ${sobrenomes[0].charAt(0)}.`; // Adiciona a inicial do primeiro sobrenome
         }
+        if (sobrenomes.length > 1) {
+            abreviado += ` ${sobrenomes[1].charAt(0)}.`; // Adiciona a inicial do segundo sobrenome
+        }
         return abreviado;
     }
 
