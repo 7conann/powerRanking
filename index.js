@@ -1,6 +1,8 @@
+let currentUser = null; // Variável global para armazenar os dados do usuário atual
+
 document.addEventListener('DOMContentLoaded', () => {
     const SUPABASE_URL = 'https://eunburxiqtzftppqvxtr.supabase.co'; // Substitua pela sua URL do Supabase
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bmJ1cnhpcXR6ZnRwcHF2eHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU1Njc3MzEsImV4cCI6MjA0MTE0MzczMX0.y-EgwTJ-uEzbLa_bTSzbEN10dSyTVrSJ27zrl51MLKc'; // Substitua pela sua chave de API do Supabase
+    const SUPABASE_ANON_KEY = 'JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bmJ1cnhpcXR6ZnRwcHF2eHRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU1Njc3MzEsImV4cCI6MjA0MTE0MzczMX0.y-EgwTJ-uEzbLa_bTSzbEN10dSyTVrSJ27zrl51MLKc'; // Substitua pela sua chave de API do Supabase
     const TABLE_NAME = 'atm-dadosMentorBeta';
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -63,6 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             rankingContainer.appendChild(rankItem);
         });
+
+        // Atualizar a posição do usuário atual no ranking
+        if (currentUser) {
+            const currentUserIndex = rankedQuizProgress.findIndex(quiz => quiz.name === currentUser.name);
+            if (currentUserIndex !== -1) {
+                document.getElementById('currentUserPosition').textContent = `#${currentUserIndex + 1}`;
+            }
+        }
     }
 
     fetchData();
@@ -73,9 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = event.data.user;
             console.log('Dados do usuário recebidos no iframe:', user);
 
+            // Definir o usuário atual
+            currentUser = user;
+
             // Atualizar a interface do iframe com os dados do usuário
-            document.getElementById('userName').textContent = user.name;
-            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('currentUserName').textContent = user.name;
+            document.getElementById('currentUserEmail').textContent = user.email;
         } else {
             console.log('Mensagem recebida:', event.data);
             console.log('Tipo de mensagem não reconhecido:', event.data.type);
