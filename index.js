@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Filtrar os dados que possuem quizProgress
         const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
+        console.log('Dados válidos:', validData);
 
         if (validData.length > 0) {
             // Extrair e combinar todos os dados de quizProgress
