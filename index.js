@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: abreviarNome(item.quizProgress.name, 20), // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    name: abreviarNome(item.name, 20), // Adicionar o nome do usuário ao objeto quiz e abreviar
                     userId: item.id // Adicionar o ID do usuário ao objeto quiz
                 })));
 
@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20);
                         document.getElementById('currentUserScore').textContent = currentUserData.score;
                         document.getElementById('currentUserTiming').textContent = currentUserData.timing;
+                    } else {
+                        document.getElementById('currentUserPosition').textContent = '#?';
+                        document.getElementById('currentUserScore').textContent = '#?';
+                        document.getElementById('currentUserTiming').textContent = '#?';
                     }
                 }
             } else {
@@ -111,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.data.type === 'USER_INFO') {
             const user = event.data.user;
             console.log('Dados do usuário recebidos no iframe:', user);
-
+            console.log(user.id);
             // Definir o usuário atual
             currentUser = user;
 
