@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log('Rankeamento de quizProgress:', rankedQuizProgress);
                 updateRanking(rankedQuizProgress); // Passar os dados rankeados
-
+                console.log('Dados do usuário atual:', currentUser);
                 // Atualizar os dados do usuário atual
                 if (currentUser) {
                     const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
