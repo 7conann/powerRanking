@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TABLE_NAME = 'atm-dadosMentorBeta';
 
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   async function fetchData() {
       console.log('Iniciando a consulta ao Supabase...');
       let { data, error } = await supabase
@@ -41,5 +42,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
   }
+  fetchData();
 });
-fetchData();
