@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: abreviarNome(item.quizProgress.name, 20) // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    name: abreviarNome(item.quizProgress.name, 20), // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    userId: item.id // Adicionar o ID do usuário ao objeto quiz
                 })));
 
                 // Ordenar os dados de quizProgress
@@ -58,6 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log('Rankeamento de quizProgress:', rankedQuizProgress);
                 updateRanking(rankedQuizProgress); // Passar os dados rankeados
+
+                // Atualizar os dados do usuário atual
+                if (currentUser) {
+                    const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
+                    if (currentUserData) {
+                        document.getElementById('currentUserPosition').textContent = `#${rankedQuizProgress.findIndex(quiz => quiz.userId === currentUser.id) + 1}`;
+                        document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20);
+                        document.getElementById('currentUserScore').textContent = currentUserData.score;
+                        document.getElementById('currentUserTiming').textContent = currentUserData.timing;
+                    }
+                }
             } else {
                 console.warn('Nenhum dado de quizProgress encontrado.');
             }
@@ -86,20 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             rankItem.innerHTML = `
                 <span class="rank-position">${index + 1}</span>
-                <p >${quiz.name}</p>
+                <p>${quiz.name}</p>
                 <p class="seg">${quiz.score}</p>
                 <p class="seg">${quiz.timing}</p>
             `;
             rankingContainer.appendChild(rankItem);
         });
-
-        // Atualizar a posição do usuário atual no ranking
-        if (currentUser) {
-            const currentUserIndex = rankedQuizProgress.findIndex(quiz => quiz.name === currentUser.name);
-            if (currentUserIndex !== -1) {
-                document.getElementById('currentUserPosition').textContent = `#${currentUserIndex + 1}`;
-            }
-        }
     }
 
     // Função para receber mensagens do site principal
@@ -114,11 +118,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Atualizar a interface do iframe com os dados do usuário
             document.getElementById('currentUserName').textContent = abreviarNome(user.name, 20);
             document.getElementById('currentUserEmail').textContent = user.email;
+
+            // Buscar dados do Supabase após definir o usuário atual
+            fetchData();
         } else {
             console.log('Mensagem recebida:', event.data);
             console.log('Tipo de mensagem não reconhecido:', event.data.type);
         }
     });
 
+    // Buscar dados do Supabase ao carregar a página
     fetchData();
 });
