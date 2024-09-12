@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Atualizar a interface do iframe com os dados do usuário
         document.getElementById('userName').textContent = user.name;
         document.getElementById('userEmail').textContent = user.email;
+      }else{
+        console.log('Mensagem recebida:', event.data);
+        console.log('Tipo de mensagem não reconhecido:', event.data.type);
       }
     });
   });
