@@ -24,23 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para buscar dados do Supabase e atualizar o ranking
     async function fetchData() {
-        console.log('Iniciando a consulta ao Supabase...');
         let { data, error } = await supabase
             .from(TABLE_NAME)
             .select('*');
 
-        console.log('Resposta completa:', { data, error });
 
         if (error) {
             console.error('Erro ao consultar o Supabase:', error);
         } else if (data.length === 0) {
             console.warn('Nenhum dado encontrado na tabela workez.');
         } else {
-            console.log('Dados recebidos do Supabase:', data);
 
             // Filtrar os dados que possuem quizProgress
             const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
-            console.log('Dados válidos:', validData);
 
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
@@ -57,13 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     return b.score - a.score; // Maior pontuação primeiro
                 }).slice(0, 10); // Limitar aos 10 melhores resultados
 
-                console.log('Rankeamento de quizProgress:', rankedQuizProgress);
                 updateRanking(rankedQuizProgress); // Passar os dados rankeados
 
                 // Atualizar os dados do usuário atual
                 if (currentUser) {
                     const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
-                    console.log('Dados do usuário atual:', currentUserData);
                     if (currentUserData) {
                         document.getElementById('currentUserPosition').textContent = `#${rankedQuizProgress.findIndex(quiz => quiz.userId === currentUser.id) + 1}`;
                         document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20, 6);
@@ -115,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('message', (event) => {
         if (event.data.type === 'USER_INFO') {
             const user = event.data.user;
-            console.log('Dados do usuário recebidos no iframe:', user);
             fetchData();
             // Definir o usuário atual
             currentUser = user;
@@ -126,8 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Buscar dados do Supabase após definir o usuário atual
         } else {
-            console.log('Mensagem recebida:', event.data);
-            console.log('Tipo de mensagem não reconhecido:', event.data.type);
+           
         }
     });
 
