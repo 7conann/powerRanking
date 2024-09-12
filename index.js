@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Função para abreviar o nome
-    function abreviarNome(nome, maxLength) {
+    function abreviarNome(nome, maxLength, maxFirstNameLength) {
         if (!nome) return ''; // Verifica se o nome está definido
         if (nome.length <= maxLength) return nome;
         const [primeiroNome, ...sobrenomes] = nome.split(' ');
-        if (primeiroNome.length >= maxLength) return primeiroNome.slice(0, maxLength);
+        if (primeiroNome.length >= maxFirstNameLength) return primeiroNome.slice(0, maxFirstNameLength);
         const abreviado = sobrenomes.reduce((acc, sobrenome) => {
             if (acc.length + sobrenome.length + 2 <= maxLength) { // +2 para incluir o espaço e o ponto
                 return `${acc} ${sobrenome.charAt(0)}.`;
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (validData.length > 0) {
                 const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
                     ...quiz,
-                    name: abreviarNome(item.quizProgress.name, 20), // Adicionar o nome do usuário ao objeto quiz e abreviar
+                    name: abreviarNome(item.quizProgress.name, 20, 10), // Adicionar o nome do usuário ao objeto quiz e abreviar
                     userId: item.id // Adicionar o ID do usuário ao objeto quiz
                 })));
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Dados do usuário atual:', currentUserData);
                     if (currentUserData) {
                         document.getElementById('currentUserPosition').textContent = `#${rankedQuizProgress.findIndex(quiz => quiz.userId === currentUser.id) + 1}`;
-                        document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20);
+                        document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20, 10);
                         document.getElementById('currentUserScore').textContent = currentUserData.score;
                         document.getElementById('currentUserTiming').textContent = currentUserData.timing;
                     } else {
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUser = user;
 
             // Atualizar a interface do iframe com os dados do usuário
-            document.getElementById('currentUserName').textContent = abreviarNome(user.name, 5);
+            document.getElementById('currentUserName').textContent = abreviarNome(user.name, 20, 10);
             document.getElementById('currentUserEmail').textContent = user.email;
 
             // Buscar dados do Supabase após definir o usuário atual
