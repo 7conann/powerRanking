@@ -70,10 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             rankItem.innerHTML = `
-                <div class="rank-position">${index + 1}</div>
-                <div class="rank-name">${quiz.name}</div>
-                <div class="rank-score">${quiz.score}</div>
-                <div class="rank-timing">${quiz.timing}</div>
+                <span class="rank-position">${index + 1}</span>
+                <p class="rank-name">${quiz.name}</p>
+                <p class="rank-score">${quiz.score}</p>
+                <p class="rank-timing">${quiz.timing}</p>
             `;
             rankingContainer.appendChild(rankItem);
         });
