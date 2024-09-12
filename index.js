@@ -12,13 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!nome) return ''; // Verifica se o nome está definido
         if (nome.length <= maxLength) return nome;
         const [primeiroNome, ...sobrenomes] = nome.split(' ');
-        if (primeiroNome.length >= maxFirstNameLength) return primeiroNome.slice(0, maxFirstNameLength);
-        const abreviado = sobrenomes.reduce((acc, sobrenome) => {
-            if (acc.length + sobrenome.length + 2 <= maxLength) { // +2 para incluir o espaço e o ponto
-                return `${acc} ${sobrenome.charAt(0)}.`;
-            }
-            return acc;
-        }, primeiroNome);
+        let abreviado = primeiroNome.slice(0, maxFirstNameLength);
+        if (sobrenomes.length > 0) {
+            abreviado += ` ${sobrenomes[0].charAt(0)}.`; // Adiciona a inicial do primeiro sobrenome
+        }
         return abreviado;
     }
 
