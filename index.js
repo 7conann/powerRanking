@@ -7,21 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Função para abreviar o nome
-    function abreviarNome(nome, maxLength, maxFirstNameLength) {
-        if (!nome) return ''; // Verifica se o nome está definido
-        if (nome.length <= maxLength) return nome;
-        const [primeiroNome, ...sobrenomes] = nome.split(' ');
-        let abreviado = primeiroNome.slice(0, maxFirstNameLength);
-        if (sobrenomes.length > 0) {
-            abreviado += ` ${sobrenomes[0].charAt(0)}.`; // Adiciona a inicial do primeiro sobrenome
-        }
-        if (sobrenomes.length > 1) {
-            abreviado += ` ${sobrenomes[1].charAt(0)}.`; // Adiciona a inicial do segundo sobrenome
-        }
-        return abreviado;
-    }
-
     // Função para buscar dados do Supabase e atualizar o ranking
     async function fetchData() {
         let { data, error } = await supabase
@@ -33,46 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Erro ao consultar o Supabase:', error);
         } else if (data.length === 0) {
             console.warn('Nenhum dado encontrado na tabela workez.');
-        } else {
-
-            // Filtrar os dados que possuem quizProgress
-            const validData = data.filter(item => item.quizProgress && item.quizProgress.data && item.quizProgress.data.length > 0);
-
-            if (validData.length > 0) {
-                const allQuizProgress = validData.flatMap(item => item.quizProgress.data.map(quiz => ({
-                    ...quiz,
-                    name: abreviarNome(item.quizProgress.name, 20, 6), // Adicionar o nome do usuário ao objeto quiz e abreviar
-                    userId: item.id // Adicionar o ID do usuário ao objeto quiz
-                })));
-
-                // Ordenar os dados de quizProgress
-                const rankedQuizProgress = allQuizProgress.sort((a, b) => {
-                    if (b.score === a.score) {
-                        return a.timing - b.timing; // Menor tempo primeiro em caso de empate na pontuação
-                    }
-                    return b.score - a.score; // Maior pontuação primeiro
-                }).slice(0, 10); // Limitar aos 10 melhores resultados
-
-                updateRanking(rankedQuizProgress); // Passar os dados rankeados
-
-                // Atualizar os dados do usuário atual
-                if (currentUser) {
-                    const currentUserData = allQuizProgress.find(quiz => quiz.userId === currentUser.id);
-                    if (currentUserData) {
-                        document.getElementById('currentUserPosition').textContent = `#${rankedQuizProgress.findIndex(quiz => quiz.userId === currentUser.id) + 1}`;
-                        document.getElementById('currentUserName').textContent = abreviarNome(currentUserData.name, 20, 6);
-                        document.getElementById('currentUserScore').textContent = currentUserData.score;
-                        document.getElementById('currentUserTiming').textContent = currentUserData.timing;
-                    } else {
-                        document.getElementById('currentUserPosition').textContent = '#?';
-                        document.getElementById('currentUserScore').textContent = '#?';
-                        document.getElementById('currentUserTiming').textContent = '#?';
-                    }
-                }
-            } else {
-                console.warn('Nenhum dado de quizProgress encontrado.');
-            }
         }
+        console.log(data);
     }
 
     // Função para atualizar o ranking na interface do usuário
