@@ -60,10 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Definir o usuário atual
             currentUser = user;
 
-            // Atualizar a interface do iframe com os dados do usuário
-            document.getElementById('currentUserName').textContent = abreviarNome(user.name, 20, 6);
-            document.getElementById('currentUserEmail').textContent = user.email;
-
+            console.log('Usuário atual:', currentUser);
+            console.log('Nome do usuário:', currentUser.name);
             // Buscar dados do Supabase após definir o usuário atual
         } else {
            
